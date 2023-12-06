@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import AnimationWrapper from "../common/page-animation";
 import defaultBanner from "../imgs/blog banner.png";
 import { uploadImage } from "../common/aws";
@@ -6,6 +6,8 @@ import { Toaster, toast } from "react-hot-toast";
 import { EditorContext } from "../pages/editor.pages";
 import { Link } from "react-router-dom";
 import logo from "../imgs/logo.png";
+import EditorJS from "@editorjs/editorjs";
+import { tools } from "./tools.component";
 
 const BlogEditor = () => {
   let {
@@ -13,6 +15,15 @@ const BlogEditor = () => {
     blog: { title, banner, content, tags, des },
     setBlog,
   } = useContext(EditorContext);
+
+  useEffect(() => {
+    let editor = new EditorJS({
+      holderId: "textEditor",
+      data: "",
+      tools: tools,
+      placeholder: "Let's write an awesome story",
+    });
+  }, []);
   const handleBannerUpload = (e) => {
     let img = e.target.files[0];
 
